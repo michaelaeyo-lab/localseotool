@@ -661,7 +661,7 @@ export default function ContentEngine() {
 
                     <button
                       onClick={() => handleGenerateContent(brief, i)}
-                      disabled={loading || generatedContent[i]}
+                      disabled={loading || !!generatedContent[i]}
                       className="px-4 py-2 bg-primary/20 hover:bg-primary/30 rounded text-sm font-semibold text-primary transition-colors disabled:opacity-50"
                     >
                       {generatedContent[i] ? '✓ Content Generated' : loading ? 'Generating...' : 'Generate This Content'}
