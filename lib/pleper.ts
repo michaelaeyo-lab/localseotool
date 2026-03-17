@@ -259,7 +259,7 @@ export async function getEnhancedGMBData(profileUrl: string): Promise<PleperEnha
       const reviewsJob = results.results[reviewsKey][0];
       if (reviewsJob && reviewsJob.results) {
         enhancedData.reviews = reviewsJob.results.reviews || [];
-        console.log('PlePer: Got reviews, count:', enhancedData.reviews.length);
+        console.log('PlePer: Got reviews, count:', enhancedData.reviews?.length || 0);
       }
     }
 
