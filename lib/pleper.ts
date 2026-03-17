@@ -38,6 +38,18 @@ export interface PleperEnhancedData {
     videos_count: number;
   };
   reviews?: any[];
+  services?: {
+    count: number;
+  };
+  attributes?: {
+    count: number;
+  };
+  qa?: {
+    count: number;
+  };
+  posts?: {
+    posts_last_30_days: number;
+  };
 }
 
 /**
