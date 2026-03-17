@@ -106,6 +106,209 @@ export default function Home() {
     );
   };
 
+  const downloadAuditPDF = async (result: AuditResult, index: number) => {
+    // Dynamically import jsPDF to avoid SSR issues
+    const { default: jsPDF } = await import('jspdf');
+    const { default: autoTable } = await import('jspdf-autotable');
+
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width;
+    let yPosition = 20;
+
+    // Header
+    doc.setFontSize(20);
+    doc.setTextColor(37, 99, 235); // Primary color
+    doc.text('Local SEO Audit Report', pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 15;
+
+    // Business Name
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text(result.businessName, 20, yPosition);
+    yPosition += 8;
+
+    // Address
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text(result.address, 20, yPosition);
+    yPosition += 10;
+
+    // Divider
+    doc.setDrawColor(200, 200, 200);
+    doc.line(20, yPosition, pageWidth - 20, yPosition);
+    yPosition += 10;
+
+    // Priority Score Section
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Priority Score & Metrics', 20, yPosition);
+    yPosition += 8;
+
+    const metricsData = [
+      ['Metric', 'Value'],
+      ['Priority Score', `${result.priorityScore}/100`],
+      ['Priority Status', result.priorityStatus.toUpperCase()],
+      ['Rating', `${result.rating.toFixed(1)} ⭐`],
+      ['Total Reviews', result.totalReviews.toString()],
+      ['Profile Completeness', `${result.completenessScore}%`],
+      ['Website', result.website || 'Not provided'],
+      ['Phone', result.phone || 'Not provided'],
+    ];
+
+    autoTable(doc, {
+      startY: yPosition,
+      head: [metricsData[0]],
+      body: metricsData.slice(1),
+      theme: 'grid',
+      headStyles: { fillColor: [37, 99, 235] },
+      margin: { left: 20, right: 20 },
+    });
+
+    yPosition = (doc as any).lastAutoTable.finalY + 15;
+
+    // Issues Section
+    if (result.issues.length > 0) {
+      doc.setFontSize(14);
+      doc.setTextColor(220, 38, 38); // Red
+      doc.text(`Issues Found (${result.issues.length})`, 20, yPosition);
+      yPosition += 8;
+
+      const issuesData = result.issues.map((issue) => [
+        issue.severity.toUpperCase(),
+        issue.title,
+        issue.description,
+        `-${issue.points} pts`,
+      ]);
+
+      autoTable(doc, {
+        startY: yPosition,
+        head: [['Severity', 'Issue', 'Description', 'Impact']],
+        body: issuesData,
+        theme: 'striped',
+        headStyles: { fillColor: [220, 38, 38] },
+        margin: { left: 20, right: 20 },
+        columnStyles: {
+          0: { cellWidth: 25 },
+          1: { cellWidth: 45 },
+          2: { cellWidth: 90 },
+          3: { cellWidth: 20 },
+        },
+      });
+
+      yPosition = (doc as any).lastAutoTable.finalY + 15;
+    }
+
+    // Check if we need a new page
+    if (yPosition > 250) {
+      doc.addPage();
+      yPosition = 20;
+    }
+
+    // Recommendations Section
+    if (result.recommendations.length > 0) {
+      doc.setFontSize(14);
+      doc.setTextColor(16, 185, 129); // Green
+      doc.text('Strategic Recommendations', 20, yPosition);
+      yPosition += 8;
+
+      const recommendationsData = result.recommendations.map((rec) => [
+        rec.priority,
+        rec.title,
+        rec.description,
+        rec.impact,
+      ]);
+
+      autoTable(doc, {
+        startY: yPosition,
+        head: [['Priority', 'Recommendation', 'Description', 'Impact']],
+        body: recommendationsData,
+        theme: 'striped',
+        headStyles: { fillColor: [16, 185, 129] },
+        margin: { left: 20, right: 20 },
+        columnStyles: {
+          0: { cellWidth: 20 },
+          1: { cellWidth: 45 },
+          2: { cellWidth: 95 },
+          3: { cellWidth: 20 },
+        },
+      });
+
+      yPosition = (doc as any).lastAutoTable.finalY + 15;
+    }
+
+    // Roadmap Section (if available)
+    if (roadmap[index]) {
+      // Add new page for roadmap
+      doc.addPage();
+      yPosition = 20;
+
+      doc.setFontSize(16);
+      doc.setTextColor(37, 99, 235);
+      doc.text('AI-Generated Optimization Roadmap', 20, yPosition);
+      yPosition += 10;
+
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+
+      const roadmapLines = roadmap[index].split('\n');
+      const maxWidth = pageWidth - 40;
+
+      roadmapLines.forEach((line) => {
+        if (yPosition > 280) {
+          doc.addPage();
+          yPosition = 20;
+        }
+
+        if (line.startsWith('##')) {
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          const text = line.replace(/##/g, '').trim();
+          doc.text(text, 20, yPosition);
+          yPosition += 8;
+        } else if (line.startsWith('**') && line.endsWith('**')) {
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          const text = line.replace(/\*\*/g, '');
+          doc.text(text, 20, yPosition);
+          yPosition += 7;
+        } else if (line.startsWith('- ')) {
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          const text = '• ' + line.substring(2);
+          const splitText = doc.splitTextToSize(text, maxWidth - 10);
+          doc.text(splitText, 25, yPosition);
+          yPosition += splitText.length * 5;
+        } else if (line.trim()) {
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          const splitText = doc.splitTextToSize(line, maxWidth);
+          doc.text(splitText, 20, yPosition);
+          yPosition += splitText.length * 5;
+        }
+
+        yPosition += 2;
+      });
+    }
+
+    // Footer on last page
+    const pageCount = doc.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text(
+        `Generated by Local SEO Auditor | Page ${i} of ${pageCount}`,
+        pageWidth / 2,
+        doc.internal.pageSize.height - 10,
+        { align: 'center' }
+      );
+    }
+
+    // Save the PDF
+    const fileName = `${result.businessName.replace(/[^a-zA-Z0-9]/g, '_')}_SEO_Audit_${new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(fileName);
+  };
+
   return (
     <div className="bg-background-light dark:bg-slate-950 font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen">
       {/* Header Navigation */}
@@ -118,9 +321,6 @@ export default function Home() {
             </div>
             <nav className="hidden md:flex items-center gap-10">
               <a className="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="/">Dashboard</a>
-              <a className="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="/audits">Audits</a>
-              <a className="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="/reports">Reports</a>
-              <a className="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="/settings">Settings</a>
             </nav>
             <div className="flex items-center gap-5">
               <div className="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-700 cursor-pointer hover:ring-2 hover:ring-primary transition-all">
@@ -213,10 +413,6 @@ export default function Home() {
               <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
                 Provide a business name and location to initiate a comprehensive local SEO evaluation.
               </p>
-              <a href="/how-it-works" className="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
-                <span className="material-symbols-outlined text-lg">help_outline</span>
-                Learn the methodology
-              </a>
             </div>
           )}
 
@@ -401,44 +597,53 @@ export default function Home() {
                   )}
 
                   {/* Footer Buttons */}
-                  <div className="p-4 bg-slate-50/50 dark:bg-slate-800/30 flex flex-wrap gap-4 justify-end border-t border-slate-100 dark:border-slate-800/60">
+                  <div className="p-4 bg-slate-50/50 dark:bg-slate-800/30 flex flex-wrap gap-4 justify-between border-t border-slate-100 dark:border-slate-800/60">
                     <button
-                      onClick={() => generateRoadmap(result, index)}
-                      disabled={generatingRoadmap[index]}
-                      className="px-5 py-2 bg-primary text-white rounded text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => downloadAuditPDF(result, index)}
+                      className="px-5 py-2 bg-emerald-600 text-white rounded text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm"
                     >
-                      {generatingRoadmap[index] ? (
-                        <>
-                          <span className="material-symbols-outlined text-base animate-spin">progress_activity</span>
-                          Generating...
-                        </>
-                      ) : (
-                        <>
-                          <span className="material-symbols-outlined text-base">auto_awesome</span>
-                          Generate Roadmap
-                        </>
-                      )}
+                      <span className="material-symbols-outlined text-base">download</span>
+                      Download PDF Report
                     </button>
-                    <a
-                      href={result.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2 border border-slate-200 dark:border-slate-700 rounded text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 transition-colors flex items-center gap-2"
-                    >
-                      <span className="material-symbols-outlined text-base">map</span>
-                      Maps View
-                    </a>
-                    {result.website && (
+                    <div className="flex flex-wrap gap-4">
+                      <button
+                        onClick={() => generateRoadmap(result, index)}
+                        disabled={generatingRoadmap[index]}
+                        className="px-5 py-2 bg-primary text-white rounded text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {generatingRoadmap[index] ? (
+                          <>
+                            <span className="material-symbols-outlined text-base animate-spin">progress_activity</span>
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <span className="material-symbols-outlined text-base">auto_awesome</span>
+                            Generate Roadmap
+                          </>
+                        )}
+                      </button>
                       <a
-                        href={result.website}
+                        href={result.googleMapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm"
+                        className="px-5 py-2 border border-slate-200 dark:border-slate-700 rounded text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 transition-colors flex items-center gap-2"
                       >
-                        <span className="material-symbols-outlined text-base">public</span>
-                        Visit Site
+                        <span className="material-symbols-outlined text-base">map</span>
+                        Maps View
                       </a>
-                    )}
+                      {result.website && (
+                        <a
+                          href={result.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-5 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm"
+                        >
+                          <span className="material-symbols-outlined text-base">public</span>
+                          Visit Site
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -448,20 +653,15 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200/60 dark:border-slate-800/60 py-16 bg-white dark:bg-slate-950">
+      <footer className="border-t border-slate-200/60 dark:border-slate-800/60 py-12 bg-white dark:bg-slate-950">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2.5 opacity-40 grayscale">
               <span className="material-symbols-outlined text-xl">api</span>
               <span className="text-[11px] font-bold uppercase tracking-[0.2em]">Google Places Certified</span>
             </div>
-            <div className="flex gap-10 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">
-              <a className="hover:text-primary transition-colors" href="/privacy">Privacy</a>
-              <a className="hover:text-primary transition-colors" href="/terms">Terms</a>
-              <a className="hover:text-primary transition-colors" href="/docs">Docs</a>
-            </div>
-            <div className="text-right">
-              <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">© 2024 Local SEO Auditor Inc.</p>
+            <div className="text-center">
+              <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">© 2024 Local SEO Auditor</p>
               <p className="text-[10px] text-slate-300 dark:text-slate-600 mt-1 italic tracking-wide">
                 Built by{' '}
                 <a
