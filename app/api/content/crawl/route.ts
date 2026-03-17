@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     // Step 1: Start the crawl job with retry logic for rate limits
     console.log('Sending request to FireCrawl API...');
-    let crawlResponse;
+    let crawlResponse: any = null;
     let retryCount = 0;
     const maxRetries = 3;
 
@@ -72,6 +72,10 @@ export async function POST(request: NextRequest) {
           throw err; // Not rate limited or max retries reached
         }
       }
+    }
+
+    if (!crawlResponse) {
+      throw new Error('Failed to start crawl after retries');
     }
 
     console.log('Crawl response received:', crawlResponse.data);

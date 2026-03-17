@@ -763,6 +763,54 @@ export default function ContentEngine() {
           </div>
         )}
       </div>
+
+      {/* Footer Credits */}
+      <div className="mt-16 max-w-5xl mx-auto">
+        <div className="bg-slate-900/30 backdrop-blur-sm rounded-xl border border-slate-800 p-6">
+          <div className="text-center mb-4">
+            <p className="text-sm text-slate-400">
+              Built by <span className="text-primary font-bold">Michael Eyo</span> using{' '}
+              <span className="text-white font-semibold">Claude Code</span>
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div>
+              <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">AI & Analytics</h4>
+              <div className="space-y-1">
+                <p className="text-xs text-slate-400">OpenAI GPT-4o</p>
+                <p className="text-xs text-slate-400">SERP API</p>
+                <p className="text-xs text-slate-400">Claude Code Agent</p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Infrastructure</h4>
+              <div className="space-y-1">
+                <p className="text-xs text-slate-400">Next.js 14 (App Router)</p>
+                <p className="text-xs text-slate-400">TypeScript</p>
+                <p className="text-xs text-slate-400">Vercel Hosting</p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Features</h4>
+              <div className="space-y-1">
+                <p className="text-xs text-slate-400">SERP Intelligence</p>
+                <p className="text-xs text-slate-400">Content Gap Analysis</p>
+                <p className="text-xs text-slate-400">AI Content Generation</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-slate-800 text-center">
+            <p className="text-xs text-slate-500">
+              Enterprise-grade SEO content engine powered by AI • Built with{' '}
+              <span className="text-primary">Claude Code</span> autonomous coding
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

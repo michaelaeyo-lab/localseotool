@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Local SEO Auditor - Professional Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "slate": {
+                            "950": "#0f172a",
+                        },
+                        "background-light": "#fcfcfc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'premium': '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+                        'premium-lg': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                        'premium-xl': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif
+    }
+.hero-premium {
+    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    overflow: hidden
+    }
+.hero-premium::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBcQVdyspmK4oJfmTjknUusIHVBoNJJWNwlV56yDoI3V1MGYrXmqqgmm5dPQ7oBvHnrwyrZ1tMTJGKFqpnqy_AT9WpyGMnc6Mnn_70mMudCrOkC-a8p77sUyTQvHVRaGHQ2DGzEm0JbwKC3RGjoZ7_A7iMTxq1moDnUEpoMZyuyBPE8vuV6hrZmdGUvb-4M98hKLB9mmvApxDrXXr_xUb3-sq2dA8x-rCePPdgTQajxejOZGTtr8iwHfzQp5dEOyyviVq3uyTAp70g);
+    opacity: 0.05;
+    pointer-events: none
+    }
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-slate-950 font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200/60 dark:border-slate-800/60 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-2xl">query_stats</span>
+<span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Local SEO Auditor</span>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Audits</a>
+<a class="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Reports</a>
+<a class="text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-5">
+<button class="hidden sm:inline-flex items-center px-4 py-1.5 bg-slate-900 dark:bg-white dark:text-slate-950 text-white text-xs font-bold rounded shadow-sm hover:opacity-90 transition-opacity uppercase tracking-wider">
+                    Upgrade Plan
+                </button>
+<div class="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-700">
+<img alt="User Profile" data-alt="User avatar placeholder circular icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3UCCXXK-eT1jRouWWwZm7qkTS5SJQtgnE78-fqEIhuDAg9fCODvJjC9-uqHggtvXSTxrdobtVZ9dS6ZCeubRvfALgmY-kVe3vved82FJXib7rSfWvniFjexKn2YaP33bOWShtWQ0o1g_mkOqWbWFluyi1pog90cSAx1SmMjMNcxTq9K4dXTQZ13x8F7P8S8T3bxoVWmB6RJ6t7yL_iHBaAauAw__X2j2biuT8wjZrlKSW9Uo3rjbAvju6SsjeLHX_yB6TdhbYeCI"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="hero-premium pt-24 pb-32 px-4 text-center text-white">
+<div class="max-w-4xl mx-auto relative z-10">
+<h1 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight leading-[1.1]">Local SEO Auditor</h1>
+<p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
+                Professional-grade analysis and optimization for your Google Business Profile. Gain precision insights and execute actionable strategies to secure local search dominance.
+            </p>
+</div>
+</section>
+<!-- Search Interface -->
+<div class="max-w-5xl mx-auto px-4 -mt-16 relative z-20">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-premium-xl border border-slate-200/60 dark:border-slate-800 p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
+<div class="lg:col-span-2 space-y-2">
+<label class="text-[10px] font-bold uppercase tracking-[0.1em] text-slate-400 dark:text-slate-500">Business Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">store</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-slate-400" placeholder="e.g. Joe's Coffee House" type="text"/>
+</div>
+</div>
+<div class="lg:col-span-2 space-y-2">
+<label class="text-[10px] font-bold uppercase tracking-[0.1em] text-slate-400 dark:text-slate-500">Location</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">location_on</span>
+<input class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-slate-400" placeholder="City, State or Zip" type="text"/>
+</div>
+</div>
+<div class="lg:col-span-1">
+<button class="w-full py-2.5 bg-primary text-white text-sm font-bold rounded-lg hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-2">
+<span>Audit GMB</span>
+<span class="material-symbols-outlined text-sm">bolt</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Area -->
+<section class="max-w-7xl mx-auto px-4 py-20">
+<!-- Empty State (Hidden when data exists) -->
+<div class="flex flex-col items-center justify-center text-center py-24 bg-slate-50/30 dark:bg-slate-900/20 rounded-2xl border border-slate-200/60 dark:border-slate-800/50">
+<div class="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-4xl">manage_search</span>
+</div>
+<h3 class="text-xl font-bold mb-2">No active audits</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
+                Provide a business name and location to initiate a comprehensive local SEO evaluation.
+            </p>
+<button class="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">help_outline</span>
+                Learn the methodology
+            </button>
+</div>
+<!-- Audit Results Card -->
+<div class="mt-16 space-y-8">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold tracking-tight">Recent Analysis</h2>
+<span class="text-xs font-medium text-slate-400">1 result found</span>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-premium border border-slate-200/60 dark:border-slate-800 overflow-hidden">
+<!-- Card Header -->
+<div class="p-6 border-b border-slate-100 dark:border-slate-800/60 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h3 class="text-lg font-bold">The Daily Grind Coffee Roasters</h3>
+<span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400 border border-red-100 dark:border-red-900/30">Action Required</span>
+</div>
+<p class="text-slate-400 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span>
+                            123 Artisan Alley, Seattle, WA 98101
+                        </p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-slate-400">
+<span class="material-symbols-outlined text-xl">share</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-slate-400">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-100 dark:divide-slate-800/60 border-b border-slate-100 dark:border-slate-800/60">
+<div class="p-6 text-center">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Priority Score</p>
+<p class="text-2xl font-bold text-red-500">42<span class="text-xs text-slate-300 font-normal">/100</span></p>
+</div>
+<div class="p-6 text-center">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Rating</p>
+<div class="flex items-center justify-center gap-1.5">
+<p class="text-2xl font-bold">4.2</p>
+<span class="material-symbols-outlined text-yellow-500 fill-current text-lg">star</span>
+</div>
+</div>
+<div class="p-6 text-center">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Reviews</p>
+<p class="text-2xl font-bold">128</p>
+</div>
+<div class="p-6 text-center">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Visibility</p>
+<a class="text-primary text-sm font-bold hover:opacity-80 flex items-center justify-center gap-1" href="#">
+                            Live Profile <span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</div>
+</div>
+<!-- Body Content -->
+<div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-slate-800/60">
+<!-- Issues Found -->
+<div class="p-8 bg-slate-50/30 dark:bg-slate-900/40">
+<h4 class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500 text-lg">warning</span>
+                            Critical Issues (4)
+                        </h4>
+<ul class="space-y-6">
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-red-500 text-xl">error_outline</span>
+<div>
+<p class="text-sm font-bold text-slate-800 dark:text-slate-200">Missing Phone Verification</p>
+<p class="text-xs text-slate-500 mt-1 leading-relaxed">No verified contact number associated with the primary listing.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-red-500 text-xl">error_outline</span>
+<div>
+<p class="text-sm font-bold text-slate-800 dark:text-slate-200">Inconsistent NAP Data</p>
+<p class="text-xs text-slate-500 mt-1 leading-relaxed">Name, Address, Phone discrepancies detected across 3 citations.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-orange-500 text-xl">report_problem</span>
+<div>
+<p class="text-sm font-bold text-slate-800 dark:text-slate-200">Visual Asset Quality</p>
+<p class="text-xs text-slate-500 mt-1 leading-relaxed">Listing suffers from low-resolution user generated imagery.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Recommendations -->
+<div class="p-8">
+<h4 class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-500 text-lg">check_circle</span>
+                            Strategic Recommendations
+                        </h4>
+<ul class="space-y-6">
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-emerald-500 text-xl">add_task</span>
+<div>
+<p class="text-sm font-bold text-slate-800 dark:text-slate-200">Semantic Keyword Integration</p>
+<p class="text-xs text-slate-500 mt-1 leading-relaxed">Optimize profile description with high-intent local modifiers.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-emerald-500 text-xl">add_task</span>
+<div>
+<p class="text-sm font-bold text-slate-800 dark:text-slate-200">Profile Synchronization</p>
+<p class="text-xs text-slate-500 mt-1 leading-relaxed">Align metadata with Apple Maps Connect and Bing Places.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<span class="material-symbols-outlined text-emerald-500 text-xl">add_task</span>
+<div>
+<p class="text-sm font-bold text-slate-800 dark:text-slate-200">Conversational Commerce</p>
+<p class="text-xs text-slate-500 mt-1 leading-relaxed">Activate GMB messaging to increase direct conversion rates.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="p-4 bg-slate-50/50 dark:bg-slate-800/30 flex flex-wrap gap-4 justify-end border-t border-slate-100 dark:border-slate-800/60">
+<button class="px-5 py-2 border border-slate-200 dark:border-slate-700 rounded text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-base">map</span>
+                        Maps View
+                    </button>
+<button class="px-5 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-base">public</span>
+                        Visit Site
+                    </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-slate-200/60 dark:border-slate-800/60 py-16 bg-white dark:bg-slate-950">
+<div class="max-w-7xl mx-auto px-4">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-2.5 opacity-40 grayscale">
+<span class="material-symbols-outlined text-xl">api</span>
+<span class="text-[11px] font-bold uppercase tracking-[0.2em]">Google Places Certified</span>
+</div>
+<div class="flex gap-10 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+<a class="hover:text-primary transition-colors" href="#">Docs</a>
+</div>
+<div class="text-right">
+<p class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">© 2024 Local SEO Auditor Inc.</p>
+<p class="text-[10px] text-slate-300 dark:text-slate-600 mt-1 italic tracking-wide">Built by Michael Eyo</p>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
