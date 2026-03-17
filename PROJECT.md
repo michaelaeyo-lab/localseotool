@@ -46,7 +46,7 @@
 ### 1. Google Places API
 **Purpose:** Search for businesses and get basic GMB data (rating, reviews, photos, hours)
 
-- **API Key:** `AIzaSyD1-2RDqqAlO2vA4UuxO2prIYXnUu3wGb4`
+- **API Key:** `your_google_places_api_key_here`
 - **Project:** ATCB Projects (existing)
 - **Base URL:** `https://maps.googleapis.com/maps/api/place`
 - **Documentation:** https://developers.google.com/maps/documentation/places/web-service
@@ -76,8 +76,8 @@ GET /details/json - Get detailed place information
 ### 2. PlePer Scrape API
 **Purpose:** Get comprehensive GMB data including services, attributes, Q&A, posts, and accurate photo counts
 
-- **API Key:** `7ad3edc2f70f9152bb99b464d9170084`
-- **API Signature:** `43299460abe6431c457b8fe69d4af6624957b96d`
+- **API Key:** `your_pleper_api_key_here`
+- **API Signature:** `your_pleper_signature_here`
 - **Base URL:** `https://scrape.pleper.com/v3/`
 - **Documentation:** https://documenter.getpostman.com/view/19586458/UzBgu9Ls
 - **GitHub:** https://github.com/pleper/api
@@ -125,7 +125,7 @@ https://search.google.com/local/reviews?placeid={{PLACE_ID}}
 ### 3. SERP API
 **Purpose:** Reserved for SERP position tracking (not currently implemented)
 
-- **API Key:** `698b4f4766e116d69135b357d55921bffdfc4c18ee1841e9a0397c7843b875d6`
+- **API Key:** `your_serp_api_key_here`
 - **Base URL:** https://serpapi.com/
 - **Status:** Available but not integrated yet
 
@@ -139,7 +139,7 @@ https://search.google.com/local/reviews?placeid={{PLACE_ID}}
 ### 4. Firecrawl API
 **Purpose:** Web scraping and content analysis (not currently implemented)
 
-- **API Key:** `fc-4fe7772e718a4216bca5f5b19adfefe6`
+- **API Key:** `your_firecrawl_api_key_here`
 - **Base URL:** https://api.firecrawl.dev/
 - **Status:** Available but not integrated yet
 
@@ -417,17 +417,17 @@ npm install
 Create `.env.local` file:
 ```env
 # Google Places API
-GOOGLE_PLACES_API_KEY=AIzaSyD1-2RDqqAlO2vA4UuxO2prIYXnUu3wGb4
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 
 # SERP API
-SERP_API_KEY=698b4f4766e116d69135b357d55921bffdfc4c18ee1841e9a0397c7843b875d6
+SERP_API_KEY=your_serp_api_key_here
 
 # Firecrawl API
-FIRECRAWL_API_KEY=fc-4fe7772e718a4216bca5f5b19adfefe6
+FIRECRAWL_API_KEY=your_firecrawl_api_key_here
 
 # PlePer API
-PLEPER_API_KEY=7ad3edc2f70f9152bb99b464d9170084
-PLEPER_API_SIGNATURE=43299460abe6431c457b8fe69d4af6624957b96d
+PLEPER_API_KEY=your_pleper_api_key_here
+PLEPER_API_SIGNATURE=your_pleper_signature_here
 ```
 
 ### 3. Run Development Server
